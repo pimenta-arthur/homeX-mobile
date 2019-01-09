@@ -11,6 +11,8 @@ class HomeXApp extends StatefulWidget {
 }
 
 class HomeXState extends State<HomeXApp> {
+  var _isLoading = true;
+
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
@@ -18,11 +20,36 @@ class HomeXState extends State<HomeXApp> {
         home: new Scaffold(
           appBar: new AppBar(
             title: new Text("HomeX"),
+            actions: <Widget>[
+              new IconButton(icon: new Icon(Icons.add_circle),
+              onPressed: () {
+                setState(() {
+                  
+                });
+              },),
+              new IconButton(icon: new Icon(Icons.refresh),
+              onPressed: () {
+                setState(() {
+                  _isLoading = false;     
+                });
+              },)
+            ],
           ),
           body: new Center(
-            child: new CircularProgressIndicator(),
+            child: _isLoading ? new CircularProgressIndicator() :
+              new Text("finished loading..."), 
           ),
         ),
       );
     }
+}
+
+class HomeWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return new Center(
+      child: new CircularProgressIndicator()
+    );
+  }
 }
