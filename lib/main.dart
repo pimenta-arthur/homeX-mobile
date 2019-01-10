@@ -2,54 +2,45 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(HomeXApp());
 
-class HomeXApp extends StatefulWidget {
-  @override
-    State<StatefulWidget> createState() {
-      // TODO: implement createState
-      return new HomeXState();
-    }
-}
-
-class HomeXState extends State<HomeXApp> {
-  var _isLoading = true;
-
+class HomeXApp extends StatelessWidget {
   @override
     Widget build(BuildContext context) {
-      // TODO: implement build
-      return new MaterialApp(
-        home: new Scaffold(
-          appBar: new AppBar(
-            title: new Text("HomeX"),
-            actions: <Widget>[
-              new IconButton(icon: new Icon(Icons.add_circle),
-              onPressed: () {
-                setState(() {
-                  
-                });
-              },),
-              new IconButton(icon: new Icon(Icons.refresh),
-              onPressed: () {
-                setState(() {
-                  _isLoading = false;     
-                });
-              },)
-            ],
-          ),
-          body: new Center(
-            child: _isLoading ? new CircularProgressIndicator() :
-              new Text("finished loading..."), 
-          ),
-        ),
+      return MaterialApp(
+        home: new Home(),
       );
     }
 }
 
-class HomeWidget extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  HomeState createState() {
+    return new HomeState();
+  }
+}
+
+class HomeState extends State<Home> {
+
+  void onPressedAddButton() {
+    print("clicked on add button");
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return new Center(
-      child: new CircularProgressIndicator()
-    );
-  }
+    Widget build(BuildContext context) {
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("HomeX"),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.add_circle),
+              onPressed: onPressedAddButton,
+            )
+          ],
+        ),
+        body: new Container(
+          child: new Center(
+            child: new CircularProgressIndicator(),
+          ),
+        )
+      );
+    }
 }
