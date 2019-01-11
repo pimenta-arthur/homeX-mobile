@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:homex_mobile/models/room_model.dart';
 
 Future<void> main() async {
   final FirebaseApp app = await FirebaseApp.configure(
@@ -23,23 +24,55 @@ Future<void> main() async {
   );
   runApp(MaterialApp(
     title: 'HomeX App',
-    home: Home(app: app),
+    home: new HomePage(app: app),
   ));
 }
 
-class Home extends StatefulWidget {
-  Home({this.app});
+class HomePage extends StatefulWidget {
+  HomePage({this.app});
   final FirebaseApp app;
 
   @override
-  HomeState createState() {
-    return new HomeState();
-  }
+  _HomeState createState() => new _HomeState();
 }
 
-class HomeState extends State<Home> {
+class _HomeState extends State<HomePage> {
+  DatabaseReference _roomsRef;
+  String _userHub = "0013a2004065d594";
+  StreamSubscription<Event> _roomsSubscription;
+
+  static Map _roomsMap = new Map<String, Room>();
+
+  @override
+  void initState() {
+    super.initState();
+    final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
+
+    _roomsRef = database.reference().child("hubs/${_userHub}/rooms");
+    _roomsSubscription = _roomsRef.onChildAdded.listen((Event event) {
+      print('Child added: ${event.snapshot.value}');
+
+      String key = event.snapshot.key;
+      Map propsMap = new Map<String, dynamic>.from(event.snapshot.value);
+
+      Room room = new Room.fromJson(key, propsMap);
+      _roomsMap[room.key] = room;
+
+    }, onError: (Object o) {
+      final DatabaseError error = o;
+      print('Error: ${error.code} ${error.message}');  
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _roomsSubscription.cancel();
+  }
+
   void onPressedAddButton() {
     print("clicked on add button");
+    print(_roomsMap);
   }
 
   @override
