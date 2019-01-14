@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+
 class Room {
   String key;
   String name; 
@@ -11,5 +13,12 @@ class Room {
     this.name = json['name'];
     this.color = json['color'];
     this.devices = List<String>.from(json['devices'].keys);
+  }
+
+  Room.fromSnapshot(DataSnapshot snapshot) {
+    this.key = snapshot.key;
+    this.name = snapshot.value['name'];
+    this.color = snapshot.value['color'];
+    this.devices = List<String>.from(snapshot.value['devices'].keys);
   }
 }

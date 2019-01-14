@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
@@ -37,31 +38,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
+  var _isLoading = true;
   DatabaseReference _roomsRef;
   String _userHub = "0013a2004065d594";
   StreamSubscription<Event> _roomsSubscription;
-
   static Map _roomsMap = new Map<String, Room>();
 
   @override
   void initState() {
     super.initState();
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
-
     _roomsRef = database.reference().child("hubs/${_userHub}/rooms");
-    _roomsSubscription = _roomsRef.onChildAdded.listen((Event event) {
-      print('Child added: ${event.snapshot.value}');
 
-      String key = event.snapshot.key;
-      Map propsMap = new Map<String, dynamic>.from(event.snapshot.value);
-
-      Room room = new Room.fromJson(key, propsMap);
-      _roomsMap[room.key] = room;
-
-    }, onError: (Object o) {
-      final DatabaseError error = o;
-      print('Error: ${error.code} ${error.message}');  
+    _roomsRef.once().then((DataSnapshot snapshot) {
+      print('Connected to second database and read ${snapshot.value}');
+      Map roomsMap = new Map.from(snapshot.value);
+      // print(roomsMap);
+      roomsMap.forEach((k,v){
+        print(k);
+        print(v);
+        print("###");
+      });
+      // var map = json.encode(snapshot.value);
+      // print(map);
     });
+
+    // _roomsSubscription = _roomsRef.onChildAdded.listen((Event event) {
+    //   print('Child added: ${event.snapshot.value}');
+
+    //   // String key = event.snapshot.key;
+    //   // Map propsMap = new Map<String, dynamic>.from(event.snapshot.value);
+
+    //   // Room room = new Room.fromJson(key, propsMap);
+    //   Room room = new Room.fromSnapshot(event.snapshot);
+
+    //   _roomsMap[room.key] = room;
+
+    // }, onError: (Object o) {
+    //   final DatabaseError error = o;
+    //   print('Error: ${error.code} ${error.message}');  
+    // });
   }
 
   @override
@@ -72,7 +88,9 @@ class _HomeState extends State<HomePage> {
 
   void onPressedAddButton() {
     print("clicked on add button");
-    print(_roomsMap);
+    _roomsMap.forEach((key, room) {
+      print(room.name);
+    });
   }
 
   @override
