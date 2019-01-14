@@ -132,9 +132,30 @@ class _HomeState extends State<HomePage> {
                   : new ListView.builder(
                       itemCount: _roomsMap.length,
                       itemBuilder: (context, i) {
-                        return new Text("Row $i");
+                        var room = _roomsMap.values.toList()[i];
+                        var roomDevices = room.devices;
+                        return new Card(
+                          child: new Column(
+                            children: <Widget>[
+                              new ListTile(
+                                title: new Text(room.name.toString()),
+                                subtitle: new Text("${room.devices.length} devices"),
+                                trailing: Icon(Icons.more_vert),
+                              ),
+                              
+                            ],
+                          ),
+                        );
                       },
                     )),
         ));
   }
+
+  // List _buildRoomsList() {
+  //   return _roomsMap.values
+  //   .map((room) => new Card(
+
+  //   ))
+  //   .toList();
+  // }
 }
