@@ -1,24 +1,24 @@
 import 'package:firebase_database/firebase_database.dart';
 
 class Room {
-  String key;
+  String id;
   String name; 
   String color; 
   List<String> devices;
 
-  Room({this.key, this.name, this.color, this.devices});
+  Room({this.id, this.name, this.color, this.devices});
 
-  Room.fromJson(String key, Map<String, dynamic> json) {
-    this.key = key;
+  Room.fromJson(String id, Map<dynamic, dynamic> json) {
+    this.id = id;
     this.name = json['name'];
     this.color = json['color'];
-    this.devices = List<String>.from(json['devices'].keys);
+    this.devices = json['devices'] == null ? new List<String>() : List<String>.from(json['devices'].keys);
   }
 
   Room.fromSnapshot(DataSnapshot snapshot) {
-    this.key = snapshot.key;
+    this.id = snapshot.key;
     this.name = snapshot.value['name'];
     this.color = snapshot.value['color'];
-    this.devices = List<String>.from(snapshot.value['devices'].keys);
+    this.devices = snapshot.value['devices'] == null ? new List<String>() : List<String>.from(snapshot.value['devices'].keys);
   }
 }

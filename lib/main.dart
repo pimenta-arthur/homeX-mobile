@@ -42,7 +42,7 @@ class _HomeState extends State<HomePage> {
   DatabaseReference _roomsRef;
   String _userHub = "0013a2004065d594";
   StreamSubscription<Event> _roomsSubscription;
-  static Map _roomsMap = new Map<String, Room>();
+  Map _roomsMap = new Map<String, Room>();
 
   @override
   void initState() {
@@ -50,34 +50,56 @@ class _HomeState extends State<HomePage> {
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
     _roomsRef = database.reference().child("hubs/${_userHub}/rooms");
 
-    _roomsRef.once().then((DataSnapshot snapshot) {
-      print('Connected to second database and read ${snapshot.value}');
-      Map roomsMap = new Map.from(snapshot.value);
-      // print(roomsMap);
-      roomsMap.forEach((k,v){
-        print(k);
-        print(v);
-        print("###");
-      });
-      // var map = json.encode(snapshot.value);
-      // print(map);
+    _roomsRef.once().then(onLoadRoomsOnce);
+
+    _roomsRef.onChildAdded.listen(onRoomAdded, onError: (Object o) {
+      final DatabaseError error = o;
+      print('Error: ${error.code} ${error.message}');
     });
 
-    // _roomsSubscription = _roomsRef.onChildAdded.listen((Event event) {
-    //   print('Child added: ${event.snapshot.value}');
+    _roomsRef.onChildRemoved.listen(onRoomRemoved, onError: (Object o) {
+      final DatabaseError error = o;
+      print('Error: ${error.code} ${error.message}');
+    });
+  }
 
-    //   // String key = event.snapshot.key;
-    //   // Map propsMap = new Map<String, dynamic>.from(event.snapshot.value);
+  onLoadRoomsOnce(DataSnapshot snapshot) {
+    print('Loading rooms at the first time: ${snapshot.value}');
 
-    //   // Room room = new Room.fromJson(key, propsMap);
-    //   Room room = new Room.fromSnapshot(event.snapshot);
+    final map = new Map.from(snapshot.value);
 
-    //   _roomsMap[room.key] = room;
+    map.forEach((k, v) {
+      Room room = new Room.fromJson(k, v);
+      _roomsMap[room.id] = room;
+    });
 
-    // }, onError: (Object o) {
-    //   final DatabaseError error = o;
-    //   print('Error: ${error.code} ${error.message}');  
-    // });
+    setState(() {
+      print("Finished loading rooms");
+      _isLoading = false;
+    });
+  }
+
+  onRoomAdded(Event event) {
+    if (!_isLoading) {
+      print('Child added: ${event.snapshot.value}');
+
+      Room room = new Room.fromSnapshot(event.snapshot);
+      setState(() {
+        _roomsMap[room.id] = room;
+      });
+    }
+  }
+
+  onRoomRemoved(Event event) {
+    if (!_isLoading) {
+      print('Child removed: ${event.snapshot.value}');
+
+      if (_roomsMap.containsKey(event.snapshot.key)) {
+        setState(() {
+          _roomsMap.remove(event.snapshot.key);
+        });
+      }
+    }
   }
 
   @override
@@ -88,9 +110,7 @@ class _HomeState extends State<HomePage> {
 
   void onPressedAddButton() {
     print("clicked on add button");
-    _roomsMap.forEach((key, room) {
-      print(room.name);
-    });
+    print(_roomsMap.length);
   }
 
   @override
@@ -107,8 +127,14 @@ class _HomeState extends State<HomePage> {
         ),
         body: new Container(
           child: new Center(
-            child: new CircularProgressIndicator(),
-          ),
+              child: _isLoading
+                  ? new CircularProgressIndicator()
+                  : new ListView.builder(
+                      itemCount: _roomsMap.length,
+                      itemBuilder: (context, i) {
+                        return new Text("Row $i");
+                      },
+                    )),
         ));
   }
 }
