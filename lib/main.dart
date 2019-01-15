@@ -117,6 +117,7 @@ class _HomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
+          backgroundColor: Color(0xFFFFFFFF),
           title: new Text("HomeX"),
           actions: <Widget>[
             new IconButton(
@@ -139,10 +140,10 @@ class _HomeState extends State<HomePage> {
                             children: <Widget>[
                               new ListTile(
                                 title: new Text(room.name.toString()),
-                                subtitle: new Text("${room.devices.length} devices"),
+                                subtitle:
+                                    new Text("${room.devices.length} devices"),
                                 trailing: Icon(Icons.more_vert),
                               ),
-                              
                             ],
                           ),
                         );
@@ -150,12 +151,4 @@ class _HomeState extends State<HomePage> {
                     )),
         ));
   }
-
-  // List _buildRoomsList() {
-  //   return _roomsMap.values
-  //   .map((room) => new Card(
-
-  //   ))
-  //   .toList();
-  // }
 }
