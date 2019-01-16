@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:homex_mobile/models/room_model.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 Future<void> main() async {
   final FirebaseApp app = await FirebaseApp.configure(
@@ -25,19 +26,87 @@ Future<void> main() async {
   );
   runApp(MaterialApp(
     title: 'HomeX App',
-    home: new HomePage(app: app),
+    // theme: ThemeData(
+    //   primaryColor: Colors.black,
+    //   textTheme: TextTheme(
+    //     body1: TextStyle(color: Colors.black)
+    //   )
+    // ),
+    home: App(app: app),
   ));
 }
 
-class HomePage extends StatefulWidget {
-  HomePage({this.app});
+class App extends StatefulWidget {
+  App({this.app});
+  final FirebaseApp app;
+  _AppState createState() => _AppState(app: app);
+}
+
+class _AppState extends State<App> {
+  _AppState({this.app});
+  final FirebaseApp app;
+
+  int _selectedIndex = 0;
+  List<Widget> _widgetOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _widgetOptions = [
+      Text('Index 0: Home'),
+      RoomsPage(app: app),
+      Text('Index 1: Devices'),
+      Text('Index 3: Profile'),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(OMIcons.home, color: Colors.black),
+                title: Text('Home', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(OMIcons.dashboard, color: Colors.black),
+                title: Text('Rooms', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(OMIcons.settingsInputAntenna, color: Colors.black),
+                title: Text('Devices', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  OMIcons.accountCircle,
+                  color: Colors.black,
+                ),
+                title: Text('Profile', style: TextStyle(color: Colors.black)))
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ));
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+}
+
+class RoomsPage extends StatefulWidget {
+  RoomsPage({this.app});
   final FirebaseApp app;
 
   @override
-  _HomeState createState() => new _HomeState();
+  _RoomsPageState createState() => new _RoomsPageState();
 }
 
-class _HomeState extends State<HomePage> {
+class _RoomsPageState extends State<RoomsPage> {
   var _isLoading = true;
   DatabaseReference _roomsRef;
   String _userHub = "0013a2004065d594";
@@ -105,7 +174,7 @@ class _HomeState extends State<HomePage> {
   @override
   void dispose() {
     super.dispose();
-    _roomsSubscription.cancel();
+    // _roomsSubscription.cancel();
   }
 
   void onPressedAddButton() {

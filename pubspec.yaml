@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_database: ^1.0.5
   firebase_core: ^0.2.5+1
+  outline_material_icons: ^0.1.0
 
 dev_dependencies:
   flutter_test:
