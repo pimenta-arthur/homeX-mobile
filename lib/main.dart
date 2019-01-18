@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:homex_mobile/models/room_model.dart';
+import 'package:homex_mobile/pages/home_page.dart';
 import 'package:homex_mobile/pages/rooms_page.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
@@ -46,7 +44,7 @@ class _AppState extends State<App> {
     super.initState();
 
     _widgetOptions = [
-      Text('Index 0: Home'),
+      HomePage(),
       RoomsPage(app: app),
       Text('Index 1: Devices'),
       Text('Index 3: Profile'),
@@ -58,9 +56,10 @@ class _AppState extends State<App> {
     return MaterialApp(
       title: 'HomeX',
       home: Scaffold(
-          body: Center(
-            child: _widgetOptions.elementAt(_selectedIndex),
-          ),
+          body: _widgetOptions.elementAt(_selectedIndex),
+          // body: Center(
+          //   child: _widgetOptions.elementAt(_selectedIndex),
+          // ),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.shifting,
             items: <BottomNavigationBarItem>[

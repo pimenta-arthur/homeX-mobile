@@ -91,40 +91,76 @@ class _RoomsPageState extends State<RoomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Color(0xFFFFFFFF),
-          title: new Text("HomeX"),
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.add_circle),
-              onPressed: _onPressedAddButton,
-            )
-          ],
-        ),
-        body: new Container(
-          child: new Center(
-              child: _isLoading
-                  ? new CircularProgressIndicator()
-                  : new ListView.builder(
-                      itemCount: _roomsMap.length,
-                      itemBuilder: (context, i) {
-                        var room = _roomsMap.values.toList()[i];
-                        var roomDevices = room.devices;
-                        return new Card(
-                          child: new Column(
-                            children: <Widget>[
-                              new ListTile(
-                                title: new Text(room.name.toString()),
-                                subtitle:
-                                    new Text("${room.devices.length} devices"),
-                                trailing: Icon(Icons.more_vert),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    )),
-        ));
+    return Container(
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 60.0),
+      child: Center(
+          child: _isLoading
+              ? CircularProgressIndicator()
+              : SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Rooms",
+                          style: TextStyle(color: Colors.black, fontSize: 30)),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: _roomsMap.length,
+                          itemBuilder: (context, i) {
+                          var room = _roomsMap.values.toList()[i];
+                          // var roomDevices = room.devices;
+                          return Card(
+                            child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(room.name.toString()),
+                                  subtitle:
+                                      Text("${room.devices.length} devices"),
+                                  trailing: Icon(Icons.more_vert),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ))
+                    ],
+                  ),
+                )),
+    );
+
+    // return Scaffold(
+    // appBar: new AppBar(
+    //   backgroundColor: Color(0xFFFFFFFF),
+    //   title: new Text("HomeX"),
+    //   actions: <Widget>[
+    //     new IconButton(
+    //       icon: new Icon(Icons.add_circle),
+    //       onPressed: _onPressedAddButton,
+    //     )
+    //   ],
+    // ),
+    // body: Container(
+    //   child: SafeArea(
+    //       child: _isLoading
+    //           ? CircularProgressIndicator()
+    // : ListView.builder(
+    //     itemCount: _roomsMap.length,
+    //     itemBuilder: (context, i) {
+    //       var room = _roomsMap.values.toList()[i];
+    //       var roomDevices = room.devices;
+    //       return Card(
+    //         child: Column(
+    //           children: <Widget>[
+    //             ListTile(
+    //               title: Text(room.name.toString()),
+    //               subtitle:
+    //                   Text("${room.devices.length} devices"),
+    //               trailing: Icon(Icons.more_vert),
+    //             ),
+    //           ],
+    //         ),
+    //       );
+    //     },
+    //   )),
+    // ));
   }
 }
