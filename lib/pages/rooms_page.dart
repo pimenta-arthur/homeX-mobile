@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -118,9 +119,8 @@ class _RoomsPageState extends State<RoomsPage> {
                                       Text("${room.devices.length} devices"),
                                   trailing: Icon(Icons.more_vert),
                                   onTap: () {
-                                    Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
                                         builder: (context) => DetailPage(room: room), 
                                       )
                                     );

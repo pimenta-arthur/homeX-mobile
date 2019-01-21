@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homex_mobile/models/room_model.dart';
 import 'package:homex_mobile/pages/device_row.dart';
@@ -27,7 +28,7 @@ class _DetailPageState extends State<DetailPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        BackButton()
+                        BackButton(color: Colors.white,)
                       ],
                     ),
                     Padding(
@@ -36,9 +37,9 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(widget.room.name,
-                          style: TextStyle(color: Colors.black, fontSize: 30)),
+                          style: TextStyle(color: Colors.white, fontSize: 30)),
                           Text("${widget.room.devices.length.toString()} devices",
-                          style: TextStyle(color: Colors.black, fontSize: 12)),
+                          style: TextStyle(color: Colors.white, fontSize: 12)),
                         ],
                       ),
                     )
