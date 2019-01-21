@@ -17,14 +17,17 @@ class _DeviceRowState extends State<DeviceRow> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.devices),
-      title: Text(widget.deviceId),
-      trailing: Switch(
-          value: _value, 
-          onChanged: _onValueChanged,
-          activeColor: Colors.blue,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5),
+      child: ListTile(
+        leading: Icon(Icons.devices),
+        title: Text(widget.deviceId),
+        trailing: Switch(
+            value: _value, 
+            onChanged: _onValueChanged,
+            activeColor: Colors.blue,
+          ),
+      ),
     );
   }
 }

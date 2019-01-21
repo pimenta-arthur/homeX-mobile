@@ -93,7 +93,7 @@ class _RoomsPageState extends State<RoomsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 60.0),
+      margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 60.0),
       child: Center(
           child: _isLoading
               ? CircularProgressIndicator()
@@ -135,41 +135,5 @@ class _RoomsPageState extends State<RoomsPage> {
                   ),
                 )),
     );
-
-    // return Scaffold(
-    // appBar: new AppBar(
-    //   backgroundColor: Color(0xFFFFFFFF),
-    //   title: new Text("HomeX"),
-    //   actions: <Widget>[
-    //     new IconButton(
-    //       icon: new Icon(Icons.add_circle),
-    //       onPressed: _onPressedAddButton,
-    //     )
-    //   ],
-    // ),
-    // body: Container(
-    //   child: SafeArea(
-    //       child: _isLoading
-    //           ? CircularProgressIndicator()
-    // : ListView.builder(
-    //     itemCount: _roomsMap.length,
-    //     itemBuilder: (context, i) {
-    //       var room = _roomsMap.values.toList()[i];
-    //       var roomDevices = room.devices;
-    //       return Card(
-    //         child: Column(
-    //           children: <Widget>[
-    //             ListTile(
-    //               title: Text(room.name.toString()),
-    //               subtitle:
-    //                   Text("${room.devices.length} devices"),
-    //               trailing: Icon(Icons.more_vert),
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     },
-    //   )),
-    // ));
   }
 }

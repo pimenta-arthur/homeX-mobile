@@ -10,7 +10,7 @@ class _HomePageState extends State<HomePage> {
     // Size screenSize = MediaQuery.of(context).size;
 
     return Container(
-        margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 60.0),
+        margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 60.0),
         child: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,17 +37,20 @@ class _HomePageState extends State<HomePage> {
             //   ),
             // ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(top: 25),
               child: Divider(
                 color: Colors.grey,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text("Rooms", textAlign: TextAlign.left,),
-                Text("See all", textAlign: TextAlign.right,)
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text("Rooms", textAlign: TextAlign.left,),
+                  Text("See all", textAlign: TextAlign.right,)
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),

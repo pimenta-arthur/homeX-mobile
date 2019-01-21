@@ -15,9 +15,6 @@ class _DetailPageState extends State<DetailPage> {
     var screen = MediaQuery.of(context).size;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('bla'),
-      // ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -34,7 +31,7 @@ class _DetailPageState extends State<DetailPage> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 60, left: 15, right: 20),
+                      padding: EdgeInsets.only(top: 60, left: 20, right: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
