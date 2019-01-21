@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:homex_mobile/models/room_model.dart';
+import 'package:homex_mobile/pages/detail_page.dart';
 
 class RoomsPage extends StatefulWidget {
   RoomsPage({this.app});
@@ -106,7 +107,7 @@ class _RoomsPageState extends State<RoomsPage> {
                         child: ListView.builder(
                           itemCount: _roomsMap.length,
                           itemBuilder: (context, i) {
-                          var room = _roomsMap.values.toList()[i];
+                          var room = _roomsMap.values.toList()[i] as Room;
                           // var roomDevices = room.devices;
                           return Card(
                             child: Column(
@@ -116,6 +117,14 @@ class _RoomsPageState extends State<RoomsPage> {
                                   subtitle:
                                       Text("${room.devices.length} devices"),
                                   trailing: Icon(Icons.more_vert),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context, 
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(room: room), 
+                                      )
+                                    );
+                                  },
                                 ),
                               ],
                             ),
