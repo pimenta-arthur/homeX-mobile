@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homex_mobile/models/room_model.dart';
+import 'package:homex_mobile/pages/device_row.dart';
 
 class DetailPage extends StatefulWidget {
   final Room room;
@@ -49,9 +50,9 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
           Padding(
-            padding: EdgeInsets.only(top: 150),
+            padding: EdgeInsets.only(top: 140),
             child: ListView(
-              children: <Widget>[],
+              children: widget.room.devices.map((deviceId) => DeviceRow(deviceId: deviceId,)).toList(),
             ),
           )
         ],

@@ -25,17 +25,17 @@ class _HomePageState extends State<HomePage> {
             //     title: Text("Someting here"),
             //   )
             // ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Card(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(8.0), bottom: Radius.circular(8.0)),
-                  child: Image.network("https://brightsign.zendesk.com/hc/user_images/c0tt451u2Q5pwbwMii6n_Q.png",
-                    fit: BoxFit.fitWidth),
-                )
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: Card(
+            //     child: ClipRRect(
+            //       borderRadius: BorderRadius.vertical(
+            //       top: Radius.circular(8.0), bottom: Radius.circular(8.0)),
+            //       child: Image.network("https://brightsign.zendesk.com/hc/user_images/c0tt451u2Q5pwbwMii6n_Q.png",
+            //         fit: BoxFit.fitWidth),
+            //     )
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Divider(
