@@ -6,6 +6,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:homex_mobile/pages/home_page.dart';
 import 'package:homex_mobile/pages/rooms_page.dart';
+import 'package:homex_mobile/pages/devices_page.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 Future<void> main() async {
@@ -46,7 +47,7 @@ class _AppState extends State<App> {
     _widgetOptions = [
       HomePage(),
       RoomsPage(app: app),
-      Text('Index 1: Devices'),
+      DevicesPage(),
       Text('Index 3: Profile'),
     ];
   }
