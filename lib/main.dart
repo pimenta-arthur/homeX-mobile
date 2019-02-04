@@ -45,9 +45,10 @@ class _AppState extends State<App> {
     super.initState();
 
     _widgetOptions = [
+      // não precisa passar a variável app no construtor para funcionar a conexão com o firebase
       HomePage(),
       RoomsPage(app: app),
-      DevicesPage(),
+      DevicesPage(app: app),
       Text('Index 3: Profile'),
     ];
   }
